@@ -317,4 +317,13 @@ Devise.setup do |config|
     image_aspect_ratio: 'square',
     image_size: 50
   }
+
+  config.omniauth :google_oauth2, ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], {
+    scope: 'userinfo.email, userinfo.profile',
+    prompt: 'select_account',
+    image_aspect_ratio: 'square',
+    image_size: 50
+  }
+
+
 end
