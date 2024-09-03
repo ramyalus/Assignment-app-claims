@@ -1,0 +1,30 @@
+<div class="card shadow-lg">
+    <div class="card-body">
+			<div class="row d-flex mb-2">
+				<div class="col-sm-2">
+					<h3 class="card-title"><%= @employee.name.capitalize%></h3>
+				</div>
+				<div class="offset-1 col-sm-3 align-content-center">
+					<b>Email:</b> <%= @employee.email%>
+				</div>
+				<div class="offset-1 col-sm-3 align-content-center">
+					<b>DOB:</b> <%= @employee.designation%>
+				</div>
+			</div>
+
+			<div class="row d-flex">
+				<div class="offset-2 col-sm-3 align-content-center">
+					<b>Company:</b>
+					<%= @employee.company.company_name%>
+				</div>
+				<div class="offset-1 col-sm-2 align-content-center">
+					<b>Qualification:</b> <%= @employee.qualification%>
+				</div>
+				<div class="offset-1 col-sm-3 align-content-center">
+					<b>Designation:</b> <%= @employee.date_of_birth%>
+				</div>
+			</div>
+
+    </div>
+</div>
+<%= render :partial => 'reimbursements/list', locals: {reimbursements: @reimbursements} %>

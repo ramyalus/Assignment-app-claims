@@ -1,0 +1,5 @@
+<div class="d-flex flex-column p-2">
+	<h2><%= @company.company_name %></h2>
+	<span class="mx-5 my-2"><%= @company.description.capitalize %></span>
+</div>
+<%= render :partial => 'employees/list', locals: {employees: @employees, company_id: @company.id} %>

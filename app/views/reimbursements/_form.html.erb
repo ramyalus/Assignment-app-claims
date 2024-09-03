@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center my-2">
+	<div class="card shadow">
+		<div class="card-header">New Reimbursement</div>
+		<div class="card-body">
+			<%= form_with model: @reimbursement do |f| %>
+				<% if @reimbursement.errors.any?%>
+					<ul>
+						<% @reimbursement.errors.full_messages.each do |message| %>
+					        <li><%= message %></li>
+					    <% end %>
+					</ul>
+				<% end %>
+				<div class="form-group">
+					<%= f.label :company %>
+					<%= f.collection_select(:company_id, current_user.companies, :id, :company_name, { :prompt => "Select company"}, { class: "form-control"}) %>
+				</div>
+				<div class="form-group">
+				<%= f.label :select_employee %> 
+				<%= f.collection_select(:employee_id, [], :id, :name, {:prompt => "Select employee"}, { class: "form-control"}) %>
+				<!-- search employee --- <select id="employee_select"></select> -->
+				</div>
+				<div class="form-group">
+					<%= f.label :purpose%>
+					<%= f.text_area :purpose, class: "form-control" %>
+				</div>
+				<div class="form-group">
+					<%= f.label :amount %>
+					<%= f.number_field :amount, class: "form-control" %>
+				</div>
+				<div class="form-group">
+					<%= f.label :date_of_expenditure %>
+					<%= f.date_field :date_of_expenditure, class: "form-control" %>
+				</div>
+				<div class="form-group">
+					<%= f.label :receipt%>
+					<%= f.file_field :receipt, class: "form-control" %>
+				</div>
+				<div class="form-group">
+					<%= f.submit "Save", class: "btn btn-primary" %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('#reimbursement_company_id').change(function(){
+		const company_id = $('#reimbursement_company_id').val()
+		$.get(`/companies/${company_id}/employees`, function(data, status){
+			var options = ['<option value=#>Select employee</option>'];
+			data.forEach(employee => options.push(`<option value=${employee.id}>${employee.name}</option>`) )
+
+			var select_tag = `<select name="reimbursement[employee_id]" id="reimbursement_employee_id">${options}</select>`;
+		 	var employeesHandler = document.getElementById('reimbursement_employee_id');
+		 	employeesHandler.innerHTML = select_tag;
+		})
+	})
+</script>

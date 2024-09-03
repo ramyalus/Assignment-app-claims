@@ -1,0 +1,67 @@
+<div class="card shadow">
+	<div class="card-body">
+		<%= link_to "+ Add Company", new_company_path, class: "btn btn-primary mb-2 float-right"%>
+		<table class="table table-striped table-hover">
+			<thead class="thead-dark">
+				<th>#</th>
+				<th>Company Name</th>
+				<th>Owner</th>
+				<th>Employee Count</th>
+				<th>Total Reimbursements</th>
+				<th>Total Amount</th>
+				<th>Actions</th>
+			</thead>
+			<tbody>
+				<%if @companies.present? %>
+					<% @companies.each_with_index do |company, i|%>
+						<tr>
+							<td><%= i+1%></td>
+							<td>
+								<%= link_to company.company_name, company_path(company) %>
+							</td>
+							<td>
+								<%= company.user.name %>
+							</td>
+							<td>
+								<%= company.employees.length %>
+							</td>
+							<td>
+								<%= company.reimbursements.length %>
+							</td>
+							<td>
+								<%= company.reimbursements.map(&:amount).inject(:+) || 'N/A' %>
+							</td>
+							<td class="actions d-flex justify-content-space-between">
+								<%= link_to company_path(company) do%>
+									<i class="fa fa-eye"></i>
+								<% end %>
+								<%= link_to edit_company_path(company) do %>
+									<i class="fa fa-edit"></i>
+								<% end %> 						
+								<%= button_to company_path(company), method: :delete do%>
+									<i class="fa fa-trash-o"></i>
+								<% end %>
+
+							</td>
+						</tr>
+					<%end%>
+				<%else%>
+					<tr><td colspan="7">
+						No companies found
+					</td></tr>
+				<% end %>
+			</tbody>
+		</table>
+		<%= will_paginate @companies%>
+	</div>
+</div>
+
+<style type="text/css">
+	.actions a{
+ 		padding: 3px;
+ 	}
+ 	.actions i{
+ 		width: 20px;
+ 		height: 20px;
+ 	}
+</style>

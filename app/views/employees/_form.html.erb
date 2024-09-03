@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center my-2">
+	<div class="card shadow">
+		<div class="card-header">New Employee</div>
+		<div class="card-body">
+			<%= form_with model: @employee do |f| %>
+				<% if @employee.errors.any?%>
+					<ul>
+						<% @employee.errors.full_messages.each do |message| %>
+			        <li><%= message %></li>
+			      <% end %>
+					</ul>
+				<% end %>
+				<div class="form-group">
+					<%= f.label :employee_name%>
+					<%= f.text_field :name, class: "form-control" %>
+				</div>
+				
+				<div class="form-group">
+					<%= f.label :qualification %>
+					<%= f.text_field :qualification, class: "form-control" %>
+				</div>
+				
+				<div class="form-group">
+					<%= f.label :date_of_birth %>
+					<%= f.date_field :date_of_birth, class: "form-control"%>
+				</div>
+				
+				<div class="form-group">
+					<%= f.label :email %>
+					<%= f.text_field :email, class: "form-control" %>
+				</div>
+
+				<div class="form-group">
+					<%= f.label :designation %>
+					<%= f.text_field :designation, class: "form-control" %>
+				</div>
+
+				<div class="form-group">
+					<% if params["company_id"].present?%>
+						<%= f.hidden_field :company_id, value: params["company_id"] %>
+					<% else %>
+						<%= f.label :select_company %>
+						<%= f.collection_select(:company_id, current_user.companies, :id, :company_name, {:prompt => false}, { class: "form-control"})%>
+					<% end  %>
+				</div>
+				<div class="form-group">
+					<%= f.submit "Save", class: "btn btn-primary" %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<style type="text/css">
+	.card {
+		width: 500px;
+	}
+</style>
